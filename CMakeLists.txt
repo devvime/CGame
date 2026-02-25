@@ -5,7 +5,10 @@ set(CMAKE_C_STANDARD 11)
 
 find_package(raylib 5.0 REQUIRED)
 
-file(GLOB_RECURSE SOURCES src/*.c)
+file(GLOB_RECURSE SOURCES 
+    engine/*.c
+    src/*.c
+)
 
 set(CJSON_SOURCES external/cJSON/cJSON.c)
 
