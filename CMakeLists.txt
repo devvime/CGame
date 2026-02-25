@@ -7,6 +7,17 @@ find_package(raylib 5.0 REQUIRED)
 
 file(GLOB_RECURSE SOURCES src/*.c)
 
-add_executable(engine3d ${SOURCES})
+set(CJSON_SOURCES external/cJSON/cJSON.c)
 
-target_link_libraries(engine3d raylib)
+add_executable(engine3d
+    ${SOURCES}
+    ${CJSON_SOURCES}
+)
+
+target_include_directories(engine3d PRIVATE
+    external/cJSON
+)
+
+target_link_libraries(engine3d
+    raylib
+)
