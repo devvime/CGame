@@ -1,8 +1,9 @@
 #include "raylib.h"
 #include "../../../engine/scene/scene.h"
+#include "../../../engine/entity/entity.h"
 #include "../entities/player.h"
 
-static Player player;
+static Entity player;
 static Camera3D camera;
 
 static void Init(void)
