@@ -3,7 +3,6 @@
 #include "../engine/core/renderer.h"
 
 extern Scene MenuScene;
-extern Scene GameplayScene;
 
 int main(void)
 {

@@ -5,6 +5,7 @@
 
 static Button startButton;
 static Button exitButton;
+extern Scene GameplayScene;
 
 static void Init(void)
 {
@@ -40,7 +41,8 @@ static void Draw(void)
 
     if (Button_Draw(&startButton))
     {
-        TraceLog(LOG_INFO, "Botão iniciar clicado!");
+        // TraceLog(LOG_INFO, "Botão iniciar clicado!");
+        ChangeScene(&GameplayScene);
     }
 
     if (Button_Draw(&exitButton))
