@@ -1,7 +1,6 @@
 #include "raylib.h"
 #include "renderer.h"
 #include "game.h"
-#include "../level/model_cache.h"
 
 void StartGame(int width, int height, char* title) {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
@@ -10,7 +9,7 @@ void StartGame(int width, int height, char* title) {
     SetTargetFPS(60);
     InitAudioDevice();
 
-    while (!WindowShouldClose())
+    while (!WindowShouldClose() && !ShouldCloseGame())
     {
         float deltaTime = GetFrameTime();
 
@@ -24,7 +23,5 @@ void StartGame(int width, int height, char* title) {
         EndDrawing();
     }
 
-    ClearModelCache();
-    CloseAudioDevice();
-    CloseWindow();
+    CloseGame();
 }

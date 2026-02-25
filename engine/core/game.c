@@ -1,6 +1,9 @@
 #include "game.h"
 #include <stdio.h>
+#include "raylib.h"
+#include "../level/model_cache.h"
 
+static bool shouldClose = false;
 static Scene* currentScene = NULL;
 
 void ChangeScene(Scene* newScene)
@@ -24,4 +27,21 @@ void DrawGame(void)
 {
     if (currentScene && currentScene->Draw)
         currentScene->Draw();
+}
+
+void RequestClose(void)
+{
+    shouldClose = true;
+}
+
+bool ShouldCloseGame(void)
+{
+    return shouldClose;
+}
+
+void CloseGame(void)
+{
+    ClearModelCache();
+    CloseAudioDevice();
+    CloseWindow();
 }
