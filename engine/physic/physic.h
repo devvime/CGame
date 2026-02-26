@@ -20,4 +20,12 @@ void ApplyGravity(
     float dt
 );
 
+int GetStaticWorldBoxes(Entity* entities, int count, BoundingBox* outBoxes);
+
+void UpdateWorld(Entity* entities, int count, float dt);
+
+void AddEntity(Entity* entity);
+
+void Step(float delta);
+
 #endif

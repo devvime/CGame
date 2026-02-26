@@ -1,36 +1,29 @@
 #include "../entity/entity.h"
 
-BoundingBox GetEntityBoundingBox(Entity* entity)
-{
+#define MAX_ENTITIES 100
+
+static Entity worldEntities[MAX_ENTITIES];
+static int worldCount = 0;
+
+BoundingBox GetEntityBoundingBox(Entity* entity) {
     Vector3 min = {
         entity->position.x - entity->size.x,
         entity->position.y - entity->size.y,
         entity->position.z - entity->size.z
     };
-
     Vector3 max = {
         entity->position.x + entity->size.x,
         entity->position.y + entity->size.y,
         entity->position.z + entity->size.z
     };
-
     return (BoundingBox){ min, max };
 }
 
-void ResolveCollisionAxis(
-    Entity* entity,
-    BoundingBox* worldBoxes,
-    int worldCount,
-    int axis
-) {
+void ResolveCollisionAxis(Entity* entity, BoundingBox* worldBoxes, int worldCount, int axis)  {
     BoundingBox entityBox = GetEntityBoundingBox(entity);
-
-    for (int i = 0; i < worldCount; i++)
-    {
-        if (CheckCollisionBoxes(entityBox, worldBoxes[i]))
-        {
-            if (axis == 0) // X
-            {
+    for (int i = 0; i < worldCount; i++) {
+        if (CheckCollisionBoxes(entityBox, worldBoxes[i])) {
+            if (axis == 0) { // X 
                 if (entity->velocity.x > 0)
                     entity->position.x = worldBoxes[i].min.x - entity->size.x;
                 else if (entity->velocity.x < 0)
@@ -38,9 +31,7 @@ void ResolveCollisionAxis(
 
                 entity->velocity.x = 0;
             }
-
-            if (axis == 1) // Y
-            {
+            if (axis == 1) { // Y
                 if (entity->velocity.y > 0)
                     entity->position.y = worldBoxes[i].min.y - entity->size.y;
                 else if (entity->velocity.y < 0)
@@ -48,12 +39,9 @@ void ResolveCollisionAxis(
                     entity->position.y = worldBoxes[i].max.y + entity->size.y;
                     entity->grounded = true;
                 }
-
                 entity->velocity.y = 0;
             }
-
-            if (axis == 2) // Z
-            {
+            if (axis == 2) { // Z
                 if (entity->velocity.z > 0)
                     entity->position.z = worldBoxes[i].min.z - entity->size.z;
                 else if (entity->velocity.z < 0)
@@ -61,53 +49,50 @@ void ResolveCollisionAxis(
 
                 entity->velocity.z = 0;
             }
-
             entityBox = GetEntityBoundingBox(entity);
         }
     }
 }
 
-void ApplyGravity(
-    Entity* entity,
-    BoundingBox* worldBoxes,
-    int worldCount,
-    float dt)
-{
+void ApplyGravity(Entity* entity, BoundingBox* worldBoxes, int worldCount, float dt) {
     entity->grounded = false;
+    entity->velocity.y -= entity->gravity * dt; // Gravity
+    entity->position.x += entity->velocity.x * dt; // X
+    ResolveCollisionAxis(entity, worldBoxes, worldCount, 0); // X
+    entity->position.z += entity->velocity.z * dt; // Z
+    ResolveCollisionAxis(entity, worldBoxes, worldCount, 2); // Z
+    entity->position.y += entity->velocity.y * dt; // Y
+    ResolveCollisionAxis(entity, worldBoxes, worldCount, 1); // Y
+}
 
-    // Input horizontal
-    float moveX = 0;
-    float moveZ = 0;
-
-    if (IsKeyDown(KEY_W)) moveZ -= 1;
-    if (IsKeyDown(KEY_S)) moveZ += 1;
-    if (IsKeyDown(KEY_A)) moveX -= 1;
-    if (IsKeyDown(KEY_D)) moveX += 1;
-
-    entity->velocity.x = moveX * entity->speed;
-    entity->velocity.z = moveZ * entity->speed;
-
-    // Gravidade
-    entity->velocity.y -= entity->gravity * dt;
-
-    // Pulo
-    if (IsKeyPressed(KEY_SPACE) && entity->grounded)
-    {
-        entity->velocity.y = entity->jumpForce;
-        entity->grounded = false;
+int GetStaticWorldBoxes(Entity* entities, int count, BoundingBox* outBoxes) {
+    int total = 0;
+    for (int i = 0; i < count; i++) {
+        if (entities[i].kind == ENTITY_STATIC) {
+            outBoxes[total++] = GetEntityBoundingBox(&entities[i]);
+        }
     }
+    return total;
+}
 
-    // === Movimento por eixo ===
+void UpdateWorld(Entity* entities, int count, float dt) {
+    BoundingBox staticBoxes[MAX_ENTITIES];
+    int staticCount = GetStaticWorldBoxes(entities, count, staticBoxes);
+    for (int i = 0; i < count; i++) {
+        if (entities[i].kind == ENTITY_DYNAMIC) {
+            ApplyGravity(&entities[i], staticBoxes, staticCount, dt);
+        }
+    }
+}
 
-    // X
-    entity->position.x += entity->velocity.x * dt;
-    ResolveCollisionAxis(entity, worldBoxes, worldCount, 0);
+void AddEntity(Entity* entity) {
+    worldEntities[worldCount++] = *entity;
+}
 
-    // Z
-    entity->position.z += entity->velocity.z * dt;
-    ResolveCollisionAxis(entity, worldBoxes, worldCount, 2);
-
-    // Y
-    entity->position.y += entity->velocity.y * dt;
-    ResolveCollisionAxis(entity, worldBoxes, worldCount, 1);
+void Step(float deltaTime) {
+    UpdateWorld(worldEntities, worldCount, deltaTime);
+    for (int i = 0; i < worldCount; i++) {
+        worldEntities[i].type->Draw(&worldEntities[i]);
+        worldEntities[i].type->Update(&worldEntities[i], deltaTime);
+    }
 }

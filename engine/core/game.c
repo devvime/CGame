@@ -23,10 +23,10 @@ void UpdateGame(float deltaTime)
         currentScene->Update(deltaTime);
 }
 
-void DrawGame(void)
+void DrawGame(float deltaTime)
 {
     if (currentScene && currentScene->Draw)
-        currentScene->Draw();
+        currentScene->Draw(deltaTime);
 }
 
 void RequestClose(void)

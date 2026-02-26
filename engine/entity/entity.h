@@ -4,6 +4,11 @@
 #include "raylib.h"
 #include <stdbool.h>
 
+typedef enum {
+    ENTITY_STATIC,
+    ENTITY_DYNAMIC
+} EntityKind;
+
 typedef struct Entity Entity;
 
 typedef struct EntityType {
@@ -24,6 +29,7 @@ struct Entity {
 
     bool grounded;
 
+    EntityKind kind;
     EntityType* type;
 };
 

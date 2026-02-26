@@ -7,8 +7,7 @@ static Button startButton;
 static Button exitButton;
 extern Scene GameplayScene;
 
-static void Init(void)
-{
+static void Init(void) {
     startButton = Button_Create(
         540, 330,
         200, 50,
@@ -30,13 +29,11 @@ static void Init(void)
     );
 }
 
-static void Update(float deltaTime)
-{
+static void Update(float deltaTime) {
     //
 }
 
-static void Draw(void)
-{
+static void Draw(float deltaTime) {
     DrawText("Hello world", 580, 290, 20, VIOLET);
 
     if (Button_Draw(&startButton))
@@ -51,8 +48,7 @@ static void Draw(void)
     }
 }
 
-static void Unload(void)
-{
+static void Unload(void) {
 }
 
 Scene MenuScene = {

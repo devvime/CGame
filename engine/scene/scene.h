@@ -4,7 +4,7 @@
 typedef struct Scene {
     void (*Init)(void);
     void (*Update)(float deltaTime);
-    void (*Draw)(void);
+    void (*Draw)(float deltaTime);
     void (*Unload)(void);
 } Scene;
 

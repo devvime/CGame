@@ -6,7 +6,7 @@
 
 void ChangeScene(Scene* newScene);
 void UpdateGame(float deltaTime);
-void DrawGame(void);
+void DrawGame(float deltaTime);
 void RequestClose(void);
 bool ShouldCloseGame(void);
 void CloseGame(void);

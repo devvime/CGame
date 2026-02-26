@@ -1,17 +1,13 @@
 #include "raylib.h"
 #include "../../../engine/scene/scene.h"
 #include "../../../engine/entity/entity.h"
+#include "../../../engine/physic/physic.h"
 
 static Camera3D camera;
+extern Entity Player, Floor;
+static Entity player, floor;
 
-extern Entity Player;
-extern Entity Floor;
-
-static Entity player;
-static Entity floor;
-
-static void Init(void)
-{
+static void Init(void) {
     camera.position = (Vector3){0.0f, 10.0f, 10.0f};
     camera.target = (Vector3){0.0f, 0.0f, 0.0f};
     camera.up = (Vector3){0.0f, 1.0f, 0.0f};
@@ -23,26 +19,25 @@ static void Init(void)
 
     player.type->Init(&player);
     floor.type->Init(&floor);
+
+    AddEntity(&player);
+    AddEntity(&floor);
 }
 
-static void Update(float deltaTime)
-{
-    player.type->Update(&player, deltaTime);
-    floor.type->Update(&floor, deltaTime);
+static void Update(float deltaTime) {
+    //
 }
 
-static void Draw(void)
-{
+static void Draw(float deltaTime) {
     BeginMode3D(camera);
 
-    player.type->Draw(&player);
-    floor.type->Draw(&floor);
+    Step(deltaTime);
 
     EndMode3D();
 }
 
-static void Unload(void)
-{
+static void Unload(void) {
+    //
 }
 
 Scene GameplayScene = {

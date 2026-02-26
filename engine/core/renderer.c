@@ -18,7 +18,7 @@ void StartGame(int width, int height, char* title) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        DrawGame();
+        DrawGame(deltaTime);
 
         EndDrawing();
     }
