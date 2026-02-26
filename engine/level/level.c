@@ -1,6 +1,6 @@
 #include "level.h"
 #include "model_cache.h"
-#include <cjson/cJSON.h>
+#include "../cJSON/cJSON.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
