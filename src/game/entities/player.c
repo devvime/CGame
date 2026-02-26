@@ -39,6 +39,6 @@ EntityType PlayerType = {
     .Unload = PlayerUnload
 };
 
-static Entity Player = {
+Entity Player = {
     .type = &PlayerType
 };
