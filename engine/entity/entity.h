@@ -22,6 +22,7 @@ struct Entity {
     Vector3 position;
     Vector3 velocity;
     Vector3 size;
+    Model model;
     
     float speed;
     float jumpForce;

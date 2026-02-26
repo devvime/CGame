@@ -2,7 +2,7 @@
 
 void FloorInit(Entity* floor) {
     floor->position = (Vector3){0, 0, 0};
-    floor->size = (Vector3){20, 0.1f, 20};
+    floor->size = (Vector3){10, 0.1f, 10};
     floor->speed = 0;
     floor->gravity = 0;
     floor->kind = ENTITY_STATIC;
