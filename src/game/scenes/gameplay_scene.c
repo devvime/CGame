@@ -17,7 +17,7 @@ static Light lights[MAX_LIGHTS] = { 0 };
 
 static void Init() {
     shader = GetBasicShader();
-    lights[0] = CreateLight(LIGHT_POINT, (Vector3){ -2, 5, -2 }, (Vector3){ 0, 0, 0 }, YELLOW, shader);
+    lights[0] = CreateLight(LIGHT_POINT, (Vector3){ -2, 5, -2 }, (Vector3){ 0, 0, 0 }, WHITE, shader);
 
     playerEntity = Player;
     playerEntity.type->Init(&playerEntity);
