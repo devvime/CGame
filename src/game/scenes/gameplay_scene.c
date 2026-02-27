@@ -29,7 +29,7 @@ static void Init() {
 }
 
 static void Update(float deltaTime) {
-    for (int i = 0; i < MAX_LIGHTS; i++) UpdateLightValues(shader, lights[i]);
+    //
 }
 
 static void Draw(float deltaTime) {
