@@ -3,11 +3,12 @@
 #include "../../../engine/scene/scene.h"
 #include "../../../engine/gui/button.h"
 
+static Camera3D camera;
 static Button startButton;
 static Button exitButton;
 extern Scene GameplayScene;
 
-static void Init(void) {
+static void Init(void) {    
     startButton = Button_Create(
         540, 330,
         200, 50,

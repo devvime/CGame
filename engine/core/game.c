@@ -10,16 +10,21 @@ static Shader BasicShader;
 static int lightDirLoc;
 static Vector3 lightDir = { -1.0f, -1.0f, -0.5f };
 
-Shader SetBasicShader()
+void SetBasicShader()
 {
     BasicShader = LoadShader(
         "engine/shaders/basic.vs",
         "engine/shaders/basic.fs"
     );
 
-    lightDirLoc = GetShaderLocation(BasicShader, "lightDir");
-    SetShaderValue(BasicShader, lightDirLoc, &lightDir, SHADER_UNIFORM_VEC3);
+    // lightDirLoc = GetShaderLocation(BasicShader, "lightDir");
+    // SetShaderValue(BasicShader, lightDirLoc, &lightDir, SHADER_UNIFORM_VEC3);
+    BasicShader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(BasicShader, "viewPos");
+    int ambientLoc = GetShaderLocation(BasicShader, "ambient");
+    SetShaderValue(BasicShader, ambientLoc, (float[4]){ 0.1f, 0.1f, 0.1f, 1.0f }, SHADER_UNIFORM_VEC4);
+}
 
+Shader GetBasicShader() {
     return BasicShader;
 }
 
@@ -58,6 +63,7 @@ bool ShouldCloseGame(void)
 
 void CloseGame(void)
 {
+    UnloadShader(BasicShader);
     ClearModelCache();
     CloseAudioDevice();
     CloseWindow();

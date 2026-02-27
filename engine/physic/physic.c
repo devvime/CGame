@@ -1,9 +1,15 @@
 #include "../entity/entity.h"
+#include "../core/game.h"
 
 #define MAX_ENTITIES 100
 
 static Entity worldEntities[MAX_ENTITIES];
 static int worldCount = 0;
+static Shader shader = {0};
+
+void InitPhysics(void) {
+    shader = GetBasicShader();
+}
 
 BoundingBox GetEntityBoundingBox(Entity* entity) {
     Vector3 min = {
@@ -86,6 +92,9 @@ void UpdateWorld(Entity* entities, int count, float dt) {
 }
 
 void AddEntity(Entity* entity) {
+    for (int i = 0; i < entity->model.materialCount; i++) {
+        entity->model.materials[i].shader = shader;
+    }
     worldEntities[worldCount++] = *entity;
 }
 

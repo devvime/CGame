@@ -4,6 +4,8 @@
 #include "raylib.h"
 #include "../entity/entity.h"
 
+void InitPhysics(void);
+
 BoundingBox GetEntityBoundingBox(Entity* entity);
 
 void ResolveCollisionAxis(

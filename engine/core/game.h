@@ -5,7 +5,8 @@
 #include <stdbool.h>
 #include "../scene/scene.h"
 
-Shader SetBasicShader();
+void SetBasicShader();
+Shader GetBasicShader();
 void ChangeScene(Scene* newScene);
 void UpdateGame(float deltaTime);
 void DrawGame(float deltaTime);

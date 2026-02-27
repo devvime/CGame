@@ -1,49 +1,39 @@
 #include "raylib.h"
-#include "../../../engine/core/game.h"
 #include "../../../engine/scene/scene.h"
 #include "../../../engine/entity/entity.h"
 #include "../../../engine/physic/physic.h"
+#include "../../../engine/core/camera.h"
+#include "../../../engine/core/game.h"
 
-static Camera3D camera;
+#include "raymath.h"
+#define RLIGHTS_IMPLEMENTATION
+#include "../../../engine/raylib/rlights.h"
+
 extern Entity Player, Floor;
-static Entity player, floor;
+static Entity playerEntity, floorEntity;
+
+static Shader shader;
+static Light lights[MAX_LIGHTS] = { 0 };
 
 static void Init() {
-    camera.position = (Vector3){0.0f, 10.0f, 10.0f};
-    camera.target = (Vector3){0.0f, 0.0f, 0.0f};
-    camera.up = (Vector3){0.0f, 1.0f, 0.0f};
-    camera.fovy = 75.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
+    shader = GetBasicShader();
+    lights[0] = CreateLight(LIGHT_POINT, (Vector3){ -2, 5, -2 }, (Vector3){ 0, 0, 0 }, YELLOW, shader);
 
-    Shader shader = SetBasicShader();
+    playerEntity = Player;
+    playerEntity.type->Init(&playerEntity);
+    AddEntity(&playerEntity);
 
-    player = Player;
-    floor = Floor;
-
-    for (int i = 0; i < player.model.materialCount; i++) {
-        player.model.materials[i].shader = shader;
-    }
-    for (int i = 0; i < floor.model.materialCount; i++) {
-        floor.model.materials[i].shader = shader;
-    }
-
-    player.type->Init(&player);
-    floor.type->Init(&floor);
-
-    AddEntity(&player);
-    AddEntity(&floor);
+    floorEntity = Floor;
+    floorEntity.type->Init(&floorEntity);
+    AddEntity(&floorEntity);
 }
 
 static void Update(float deltaTime) {
-    //
+    for (int i = 0; i < MAX_LIGHTS; i++) UpdateLightValues(shader, lights[i]);
 }
 
 static void Draw(float deltaTime) {
-    BeginMode3D(camera);
-
-    Step(deltaTime);
-
-    EndMode3D();
+    //
 }
 
 static void Unload(void) {
