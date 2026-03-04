@@ -4,9 +4,14 @@
 #include "../physic/physic.h"
 #include "camera.h"
 
+void Debug() {
+    DrawText(TextFormat("FPS: %i", GetFPS()), 10, 10, 20, GREEN);
+    DrawText(TextFormat("Frame Time: %.4f", GetFrameTime()), 10, 35, 20, BLUE);
+}
+
 void StartGame(int width, int height, char* title) {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
-    InitWindow(1280, 720, "Meu Jogo 3D com raylib");
+    InitWindow(width, height, title);
     SetExitKey(0);
     SetTargetFPS(60);
     InitAudioDevice();
@@ -24,6 +29,8 @@ void StartGame(int width, int height, char* title) {
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
+
+        Debug();
 
         BeginMode3D(camera);
         BeginShaderMode(shader);

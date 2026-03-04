@@ -26,6 +26,14 @@ void PlayerUpdate(Entity* player, float deltaTime) {
 
 void PlayerDraw(Entity* player) {
     DrawModel(player->model, player->position, 1.0f, RED);
+    DrawCylinder(
+        (Vector3){player->position.x, 0.01f, player->position.z}, // posição
+        0.8f,   // raio topo
+        0.8f,   // raio base
+        0.02f,  // altura bem pequena
+        20,     // subdivisões
+        Fade(BLACK, 0.4f)
+    );
 }
 
 void PlayerUnload(Entity* player) {

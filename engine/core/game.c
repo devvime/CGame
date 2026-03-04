@@ -16,9 +16,6 @@ void SetBasicShader()
         "engine/shaders/basic.vs",
         "engine/shaders/basic.fs"
     );
-
-    // lightDirLoc = GetShaderLocation(BasicShader, "lightDir");
-    // SetShaderValue(BasicShader, lightDirLoc, &lightDir, SHADER_UNIFORM_VEC3);
     BasicShader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(BasicShader, "viewPos");
     int ambientLoc = GetShaderLocation(BasicShader, "ambient");
     SetShaderValue(BasicShader, ambientLoc, (float[4]){ 0.1f, 0.1f, 0.1f, 1.0f }, SHADER_UNIFORM_VEC4);
