@@ -1,12 +1,7 @@
-#include "raylib.h"
-#include "../engine/core/game.h"
-#include "../engine/core/renderer.h"
-
-extern Scene MenuScene;
+#include "../engine/renderer/renderer.h"
 
 int main(void)
 {
-    ChangeScene(&MenuScene);
-    StartGame(1280, 720, "Meu Jogo 3D com raylib");
+    Render(1280, 720, "Game Dev Template");
     return 0;
 }
