@@ -1,6 +1,5 @@
 #ifndef SHADER_H
 #define SHADER_H
-#define SHADOWMAP_RESOLUTION 1024
 
 #include "raylib.h"
 #include "raymath.h"

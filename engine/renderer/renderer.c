@@ -4,12 +4,9 @@
 #include "raymath.h"
 #include "rlgl.h"
 #include "shader.h"
-
-#define SHADOWMAP_RESOLUTION 1024
+#include "shadowmap.h"
 
 static bool shouldClose = false;
-static RenderTexture2D LoadShadowmapRenderTexture(int width, int height);
-static void UnloadShadowmapRenderTexture(RenderTexture2D target);
 static void DrawScene(Model cube, Model robot);
 
 void Render(const int width, const int height, char* title) {
@@ -19,7 +16,7 @@ void Render(const int width, const int height, char* title) {
     Camera3D camera = CreateCamera();
     Shader shadowShader = SetShader();
     Camera3D lightCamera = GetLightCamera();
-    RenderTexture2D shadowMap = LoadShadowmapRenderTexture(SHADOWMAP_RESOLUTION, SHADOWMAP_RESOLUTION);
+    RenderTexture2D shadowMap = SetShadowMap();
 
     int lightVPLoc = GetLightVPLoc();
     int shadowMapLoc = GetShadowMapLoc();
@@ -53,14 +50,13 @@ void Render(const int width, const int height, char* title) {
         
         BeginTextureMode(shadowMap);
             ClearBackground(WHITE);
-
             BeginMode3D(lightCamera);
                 lightView = rlGetMatrixModelview();
                 lightProj = rlGetMatrixProjection();
                 DrawScene(cube, robot);
             EndMode3D();
-
         EndTextureMode();
+
         lightViewProj = MatrixMultiply(lightView, lightProj);
 
         BeginDrawing();
@@ -78,8 +74,6 @@ void Render(const int width, const int height, char* title) {
             EndMode3D();
 
         EndDrawing();
-
-        if (IsKeyPressed(KEY_F)) TakeScreenshot("shaders_shadowmap.png");
     }
 
     UnloadShader(shadowShader);
@@ -89,36 +83,6 @@ void Render(const int width, const int height, char* title) {
     UnloadShadowmapRenderTexture(shadowMap);
 
     CloseWindow();
-}
-
-static RenderTexture2D LoadShadowmapRenderTexture(int width, int height)
-{
-    RenderTexture2D target = { 0 };
-    target.id = rlLoadFramebuffer();
-    target.texture.width = width;
-    target.texture.height = height;
-    if (target.id > 0)
-    {
-        rlEnableFramebuffer(target.id);
-        target.depth.id = rlLoadTextureDepth(width, height, false);
-        target.depth.width = width;
-        target.depth.height = height;
-        target.depth.format = 19;
-        target.depth.mipmaps = 1;
-        rlFramebufferAttach(target.id, target.depth.id, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_TEXTURE2D, 0);
-        if (rlFramebufferComplete(target.id)) TRACELOG(LOG_INFO, "FBO: [ID %i] Framebuffer object created successfully", target.id);
-        rlDisableFramebuffer();
-    }
-    else TRACELOG(LOG_WARNING, "FBO: Framebuffer object can not be created");
-    return target;
-}
-
-static void UnloadShadowmapRenderTexture(RenderTexture2D target)
-{
-    if (target.id > 0)
-    {
-        rlUnloadFramebuffer(target.id);
-    }
 }
 
 static void DrawScene(Model cube, Model robot)

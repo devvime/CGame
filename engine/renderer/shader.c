@@ -1,4 +1,5 @@
 #include "shader.h"
+#include "shadowmap.h"
 
 static Shader shadowShader;
 static Camera3D lightCamera = {0};
@@ -46,5 +47,5 @@ int GetShadowMapLoc() {
 }
 
 Shader GetShader() {
-
+    return shadowShader;
 }
