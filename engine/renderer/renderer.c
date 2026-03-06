@@ -9,9 +9,16 @@
 
 static bool shouldClose = false;
 
+void DebugGame() {
+    DrawText(TextFormat("FPS: %i", GetFPS()), 10, 10, 20, GREEN);
+    DrawText(TextFormat("Frame Time: %.4f", GetFrameTime()), 10, 35, 20, BLUE);
+}
+
 void Render(const int width, const int height, char* title) {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(width, height, title);
+    SetExitKey(0);
+    InitAudioDevice();
 
     Camera3D camera = CreateCamera();
     Shader shadowShader = SetShader();
@@ -48,6 +55,8 @@ void Render(const int width, const int height, char* title) {
         BeginDrawing();
             ClearBackground(RAYWHITE);
 
+            DebugGame();
+
             UpdateScene(deltaTime);
             DrawScene2D(deltaTime);
 
@@ -66,6 +75,7 @@ void Render(const int width, const int height, char* title) {
     }
 
     UnloadScene();
+    CloseAudioDevice();
     UnloadShader(shadowShader);
     UnloadShadowmapRenderTexture(shadowMap);
 
