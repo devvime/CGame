@@ -44,8 +44,8 @@ void UpdateGame(float deltaTime)
 
 void DrawGame(float deltaTime)
 {
-    if (currentScene && currentScene->Draw)
-        currentScene->Draw(deltaTime);
+    if (currentScene && currentScene->Draw3D)
+        currentScene->Draw3D(deltaTime);
 }
 
 void RequestClose(void)

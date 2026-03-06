@@ -18,6 +18,8 @@ add_executable(engine3d
 )
 
 target_include_directories(engine3d PRIVATE
+    engine
+    src
     external/cJSON
 )
 

@@ -1,12 +1,12 @@
 #include "raylib.h"
-#include "../../../engine/core/game.h"
-#include "../../../engine/scene/scene.h"
-#include "../../../engine/gui/button.h"
+#include "renderer/renderer.h"
+#include "scene/scene.h"
+#include "scene/manager.h"
+#include "gui/button.h"
 
-static Camera3D camera;
 static Button startButton;
 static Button exitButton;
-extern Scene GameplayScene;
+extern Scene Gameplay;
 
 static void Init(void) {    
     startButton = Button_Create(
@@ -30,22 +30,23 @@ static void Init(void) {
     );
 }
 
-static void Update(float deltaTime) {
+static void Draw2D(float deltaTime) {
+    DrawText("Hello world", 580, 290, 20, VIOLET);
+}
+
+static void Draw3D(float deltaTime) {
     //
 }
 
-static void Draw(float deltaTime) {
-    DrawText("Hello world", 580, 290, 20, VIOLET);
-
+static void Update(float deltaTime) {
     if (Button_Draw(&startButton))
     {
-        // TraceLog(LOG_INFO, "Botão iniciar clicado!");
-        ChangeScene(&GameplayScene);
+        LoadScene(&Gameplay);
     }
 
     if (Button_Draw(&exitButton))
     {
-        RequestClose();
+        Close();
     }
 }
 
@@ -54,7 +55,8 @@ static void Unload(void) {
 
 Scene MenuScene = {
     .Init = Init,
+    .Draw2D = Draw2D,
+    .Draw3D = Draw3D,
     .Update = Update,
-    .Draw = Draw,
     .Unload = Unload
 };

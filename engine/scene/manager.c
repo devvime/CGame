@@ -20,8 +20,19 @@ void UpdateScene(float deltaTime)
         currentScene->Update(deltaTime);
 }
 
-void DrawScene(float deltaTime)
+void DrawScene2D(float deltaTime)
 {
-    if (currentScene && currentScene->Draw)
-        currentScene->Draw(deltaTime);
+    if (currentScene && currentScene->Draw2D)
+        currentScene->Draw2D(deltaTime);
+}
+
+void DrawScene3D(float deltaTime)
+{
+    if (currentScene && currentScene->Draw3D)
+        currentScene->Draw3D(deltaTime);
+}
+
+void UnloadScene(void) {
+    if (currentScene && currentScene->Unload)
+        currentScene->Unload();
 }

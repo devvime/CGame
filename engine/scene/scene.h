@@ -3,8 +3,9 @@
 
 typedef struct Scene {
     void (*Init)(void);
+    void (*Draw2D)(float deltaTime);
+    void (*Draw3D)(float deltaTime);
     void (*Update)(float deltaTime);
-    void (*Draw)(float deltaTime);
     void (*Unload)(void);
 } Scene;
 

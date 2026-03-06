@@ -5,6 +5,8 @@
 
 void LoadScene(Scene* newScene);
 void UpdateScene(float deltaTime);
-void DrawScene(float deltaTime);
+void DrawScene2D(float deltaTime);
+void DrawScene3D(float deltaTime);
+void UnloadScene(void);
 
 #endif
