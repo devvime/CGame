@@ -1,8 +1,6 @@
 #include "entity/entity.h"
 
-static Entity* player;
-
-void PlayerInit() {
+void PlayerInit(Entity* player) {
     player->position = (Vector3){0, 5, 0};
     player->velocity = (Vector3){0};
     player->size = (Vector3){0.5f, 0.5f, 0.5f};
@@ -14,7 +12,7 @@ void PlayerInit() {
     player->model = LoadModelFromMesh(GenMeshCube(1,1,1));
 }
 
-void PlayerUpdate(float deltaTime) {
+void PlayerUpdate(Entity* player, float deltaTime) {
     if (IsKeyDown(KEY_W)) player->position.z -= player->speed * deltaTime;
     if (IsKeyDown(KEY_S)) player->position.z += player->speed * deltaTime;
     if (IsKeyDown(KEY_A)) player->position.x -= player->speed * deltaTime;
@@ -26,11 +24,11 @@ void PlayerUpdate(float deltaTime) {
     }
 }
 
-void PlayerDraw() {
+void PlayerDraw(Entity* player) {
     DrawModel(player->model, player->position, 1.0f, RED);
 }
 
-void PlayerUnload() {
+void PlayerUnload(Entity* player) {
     TraceLog(LOG_INFO, "PlayerUnload");
 }
 

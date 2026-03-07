@@ -13,7 +13,7 @@ extern Entity Robot;
 static void Init() {
     cube = LoadModelFromMesh(GenMeshCube(1.0f, 1.0f, 1.0f));
     cube.materials[0].shader = GetShader();
-
+    
     SpawnEntity(&Robot);
 
     // robot = LoadModel("resources/models/robot.glb");
@@ -40,7 +40,7 @@ static void Update(float deltaTime) {
 
 static void Unload(void) {
     UnloadModel(cube);
-    UnloadModel(robot);
+    // UnloadModel(robot);
     UnloadModelAnimations(anims, animCount);
 }
 

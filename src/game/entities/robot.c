@@ -1,10 +1,10 @@
 #include "entity/entity.h"
 
-static Entity* robot = {0};
 static int animCount, frameCounter = 0;
 
-void RobotInit() {
+void RobotInit(Entity* robot) {
     TraceLog(LOG_INFO, "INICIANDO ROBOT");
+    robot->active = true;
     robot->position = (Vector3) { 0.0f, 0.5f, 0.0f };
     robot->rotationAxis = (Vector3) { 0.0f, 1.0f, 0.0f };
     robot->scale = (Vector3) { 1.0f, 1.0f, 1.0f };
@@ -19,17 +19,17 @@ void RobotInit() {
     TraceLog(LOG_INFO, "ROBOT INICIADO");
 }
 
-void RobotUpdate(float deltaTime) {
+void RobotUpdate(Entity* robot, float deltaTime) {
     frameCounter++;
     frameCounter %= (robot->anims[0].frameCount);
     UpdateModelAnimation(robot->model, robot->anims[0], (float)frameCounter);
 }
 
-void RobotDraw() {
+void RobotDraw(Entity* robot) {
     DrawModelEx(robot->model, robot->position, robot->rotationAxis, robot->rotationAngle, robot->scale, robot->color);
 }
 
-void RobotUnload(Entity* floor) {
+void RobotUnload(Entity* robot) {
     UnloadModel(robot->model);
     UnloadModelAnimations(robot->anims, animCount);
 }

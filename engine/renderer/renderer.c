@@ -9,6 +9,8 @@
 
 static bool shouldClose = false;
 
+extern Scene MainScene;
+
 void DebugGame() {
     DrawText(TextFormat("FPS: %i", GetFPS()), 10, 10, 20, GREEN);
     DrawText(TextFormat("Frame Time: %.4f", GetFrameTime()), 10, 35, 20, BLUE);
@@ -34,6 +36,7 @@ void Render(const int width, const int height, char* title) {
     Matrix lightViewProj = { 0 };
 
     SetTargetFPS(60);
+    LoadScene(&MainScene);
     
     while (!WindowShouldClose() && !shouldClose)
     {

@@ -102,6 +102,6 @@ void Step(float deltaTime) {
     UpdateWorld(worldEntities, worldCount, deltaTime);
     for (int i = 0; i < worldCount; i++) {
         worldEntities[i].type->Draw(&worldEntities[i]);
-        worldEntities[i].type->Update(deltaTime);
+        worldEntities[i].type->Update(&worldEntities[i], deltaTime);
     }
 }

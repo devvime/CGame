@@ -53,7 +53,7 @@ static void Update(float deltaTime) {
 static void Unload(void) {
 }
 
-Scene MenuScene = {
+Scene MainScene = {
     .Init = Init,
     .Draw2D = Draw2D,
     .Draw3D = Draw3D,
