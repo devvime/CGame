@@ -9,29 +9,33 @@ typedef enum {
     ENTITY_DYNAMIC
 } EntityKind;
 
-typedef struct Entity Entity;
-
 typedef struct EntityType {
-    void (*Init)(Entity*);
-    void (*Update)(Entity*, float);
-    void (*Draw)(Entity*);
-    void (*Unload)(Entity*);
+    void (*Init)();
+    void (*Update)(float dt);
+    void (*Draw)();
+    void (*Unload)();
 } EntityType;
 
-struct Entity {
+typedef struct Entity {
     Vector3 position;
     Vector3 velocity;
     Vector3 size;
+    Vector3 rotationAxis;
+    Vector3 scale; 
+    Color color;
     Model model;
+    ModelAnimation *anims;
     
+    bool active;
+    bool grounded;
+    
+    float rotationAngle;
     float speed;
     float jumpForce;
     float gravity;
 
-    bool grounded;
-
     EntityKind kind;
     EntityType* type;
-};
+} Entity;
 
 #endif

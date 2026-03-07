@@ -1,6 +1,8 @@
-#include "../../../engine/entity/entity.h"
+#include "entity/entity.h"
 
-void FloorInit(Entity* floor) {
+static Entity* floor;
+
+void FloorInit() {
     floor->position = (Vector3){0, 0, 0};
     floor->size = (Vector3){10, 0.1f, 10};
     floor->speed = 0;
@@ -8,11 +10,11 @@ void FloorInit(Entity* floor) {
     floor->kind = ENTITY_STATIC;
 }
 
-void FloorUpdate(Entity* floor, float deltaTime) {
+void FloorUpdate(float deltaTime) {
     //
 }
 
-void FloorDraw(Entity* floor) {
+void FloorDraw() {
     DrawPlane(floor->position, (Vector2){20,20}, LIGHTGRAY);
 }
 
