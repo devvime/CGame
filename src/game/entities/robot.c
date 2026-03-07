@@ -1,9 +1,10 @@
 #include "entity/entity.h"
+#include "entity/entity_manager.h"
+#include "renderer/shader.h"
 
 static int animCount, frameCounter = 0;
 
 void RobotInit(Entity* robot) {
-    TraceLog(LOG_INFO, "INICIANDO ROBOT");
     robot->active = true;
     robot->position = (Vector3) { 0.0f, 0.5f, 0.0f };
     robot->rotationAxis = (Vector3) { 0.0f, 1.0f, 0.0f };
@@ -13,10 +14,9 @@ void RobotInit(Entity* robot) {
     robot->speed = 0;
     robot->gravity = 0;
     robot->kind = ENTITY_DYNAMIC;
-    TraceLog(LOG_INFO, "CARREGANDO MODELOS");
     robot->model = LoadModel("resources/models/robot.glb");
     robot->anims = LoadModelAnimations("resources/models/robot.glb", &animCount);
-    TraceLog(LOG_INFO, "ROBOT INICIADO");
+    AddShader(robot->model);
 }
 
 void RobotUpdate(Entity* robot, float deltaTime) {

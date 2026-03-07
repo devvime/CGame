@@ -10,7 +10,6 @@ int worldCount = 0;
 void InitEntities() {
     for (int i = 0; i < MAX_ENTITIES; i++) {
         if (entities[i].type && entities[i].type->Init) {
-            TraceLog(LOG_INFO, "ENTITY INICIADO");
             entities[i].type->Init(&entities[i]);
         }
     }
@@ -18,10 +17,6 @@ void InitEntities() {
 
 void SpawnEntity(Entity *entity) {
     if (worldCount >= MAX_ENTITIES) return;
-    
-    for (int i = 0; i < entity->model.materialCount; i++) entity->model.materials[i].shader = GetShader();
-
-    TraceLog(LOG_INFO, "ENTITY SPAWNADO");
     entities[worldCount++] = *entity;
 }
 
@@ -30,7 +25,6 @@ void UpdateEntities(float dt) {
         if (!entities[i].active) continue;
 
         if (entities[i].type && entities[i].type->Update) {
-            TraceLog(LOG_INFO, "ENTITY ATUALIZADO");
             entities[i].type->Update(&entities[i], dt);
         }
     }
@@ -41,7 +35,6 @@ void DrawEntities() {
         if (!entities[i].active) continue;
 
         if (entities[i].type && entities[i].type->Draw) {
-            TraceLog(LOG_INFO, "ENTITY DESENHADO");
             entities[i].type->Draw(&entities[i]);
         }
     }
@@ -50,10 +43,13 @@ void DrawEntities() {
 void ResetEntities() {
     for (int i = 0; i < worldCount; i++) {
         if (entities[i].type && entities[i].type->Unload) {
-            TraceLog(LOG_INFO, "ENTITY RESETADO");
             entities[i].type->Unload(&entities[i]);
         }
     }
     memset(entities, 0, sizeof(entities));
     worldCount = 0;
+}
+
+void AddShader(Model entity) {
+    for (int i = 0; i < entity.materialCount; i++) entity.materials[i].shader = GetShader();
 }
