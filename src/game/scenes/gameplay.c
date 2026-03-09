@@ -20,8 +20,8 @@ static void Draw2D(float deltaTime) {
 }
 
 static void Draw3D(float deltaTime) {
-    DrawModelEx(cube, Vector3Zero(), (Vector3) { 0.0f, 1.0f, 0.0f }, 0.0f, (Vector3) { 10.0f, 1.0f, 10.0f }, BLUE);
-    DrawModelEx(cube, (Vector3) { 1.5f, 1.0f, -1.5f }, (Vector3) { 0.0f, 1.0f, 0.0f }, 0.0f, Vector3One(), WHITE);
+    DrawModelEx(cube, Vector3Zero(), (Vector3) { 0.0f, 1.0f, 0.0f }, 0.0f, (Vector3) { 20.0f, 1.0f, 20.0f }, BLUE);
+    DrawModelEx(cube, (Vector3) { 5, 1.0f, -5 }, (Vector3) { 0.0f, 1.0f, 0.0f }, 0.0f, Vector3One(), WHITE);
 }
 
 static void Update(float deltaTime) {

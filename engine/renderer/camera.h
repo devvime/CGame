@@ -4,9 +4,9 @@
 #include "raylib.h"
 #include "raymath.h"
 
-static Camera3D camera;
+static Camera camera;
 
-Camera3D CreateCamera(void);
-Camera3D GetMainCamera(void);
+Camera CreateCamera(void);
+Camera GetMainCamera(void);
 
 #endif

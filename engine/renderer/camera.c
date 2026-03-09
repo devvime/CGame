@@ -1,8 +1,8 @@
 #include "camera.h"
 
-static Camera3D camera = (Camera3D){ 0 };
+static Camera camera = (Camera){ 0 };
 
-Camera3D CreateCamera() {
+Camera CreateCamera() {
     camera.position = (Vector3){ 10.0f, 10.0f, 10.0f };
     camera.target = Vector3Zero();
     camera.projection = CAMERA_PERSPECTIVE;
@@ -11,6 +11,6 @@ Camera3D CreateCamera() {
     return camera;
 }
 
-Camera3D GetMainCamera(void) {
+Camera GetMainCamera(void) {
     return camera;
 }

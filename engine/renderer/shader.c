@@ -10,7 +10,7 @@ Shader SetShader() {
     shadowShader = LoadShader("resources/shaders/shadowmap.vs", "resources/shaders/shadowmap.fs");
     shadowShader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shadowShader, "viewPos");
 
-    Vector3 lightDir = Vector3Normalize((Vector3){ 0.35f, -1.0f, -0.35f });
+    Vector3 lightDir = Vector3Normalize((Vector3){ 1, -5, -1 });
     Color lightColor = WHITE;
     Vector4 lightColorNormalized = ColorNormalize(lightColor);
     int lightDirLoc = GetShaderLocation(shadowShader, "lightDir");
@@ -25,11 +25,11 @@ Shader SetShader() {
     int shadowMapResolution = SHADOWMAP_RESOLUTION;
     SetShaderValue(shadowShader, GetShaderLocation(shadowShader, "shadowMapResolution"), &shadowMapResolution, SHADER_UNIFORM_INT);
 
-    lightCamera.position = Vector3Scale(lightDir, -15.0f);
+    lightCamera.position = Vector3Scale(lightDir, -15);
     lightCamera.target = Vector3Zero();
     lightCamera.projection = CAMERA_ORTHOGRAPHIC;
     lightCamera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
-    lightCamera.fovy = 20.0f;
+    lightCamera.fovy = 50;
     
     return shadowShader;
 }

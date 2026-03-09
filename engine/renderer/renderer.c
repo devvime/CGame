@@ -22,7 +22,7 @@ void Render(const int width, const int height, char* title) {
     SetExitKey(0);
     InitAudioDevice();
 
-    Camera3D camera = CreateCamera();
+    Camera camera = CreateCamera();
     Shader shadowShader = SetShader();
     Camera3D lightCamera = GetLightCamera();
     RenderTexture2D shadowMap = SetShadowMap();
@@ -43,8 +43,6 @@ void Render(const int width, const int height, char* title) {
         float deltaTime = GetFrameTime();
         Vector3 cameraPos = camera.position;
         SetShaderValue(shadowShader, shadowShader.locs[SHADER_LOC_VECTOR_VIEW], &cameraPos, SHADER_UNIFORM_VEC3);
-
-        // UpdateCamera(camera, CAMERA_ORBITAL);
         
         BeginTextureMode(shadowMap);
             ClearBackground(WHITE);
