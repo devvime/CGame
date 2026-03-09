@@ -43,6 +43,8 @@ void Render(const int width, const int height, char* title) {
         float deltaTime = GetFrameTime();
         Vector3 cameraPos = camera.position;
         SetShaderValue(shadowShader, shadowShader.locs[SHADER_LOC_VECTOR_VIEW], &cameraPos, SHADER_UNIFORM_VEC3);
+
+        // UpdateCamera(camera, CAMERA_ORBITAL);
         
         BeginTextureMode(shadowMap);
             ClearBackground(WHITE);

@@ -1,37 +1,15 @@
 #include "raylib.h"
-#include "renderer/renderer.h"
 #include "scene/scene.h"
-#include "scene/manager.h"
-#include "gui/button.h"
+#include "ui/ui.h"
 
-static Button startButton;
-static Button exitButton;
-extern Scene Gameplay;
+extern Ui MainMenu;
 
 static void Init(void) {    
-    startButton = Button_Create(
-        540, 330,
-        200, 50,
-        "Start Game",
-        BLACK,
-        20,
-        LIGHTGRAY,
-        GRAY
-    );
-
-    exitButton = Button_Create(
-        540, 390,
-        200, 50,
-        "Exit Game",
-        BLACK,
-        20,
-        LIGHTGRAY,
-        GRAY
-    );
+    MainMenu.Init();
 }
 
 static void Draw2D(float deltaTime) {
-    DrawText("Hello world", 580, 290, 20, VIOLET);
+    MainMenu.Draw();
 }
 
 static void Draw3D(float deltaTime) {
@@ -39,18 +17,11 @@ static void Draw3D(float deltaTime) {
 }
 
 static void Update(float deltaTime) {
-    if (Button_Draw(&startButton))
-    {
-        LoadScene(&Gameplay);
-    }
-
-    if (Button_Draw(&exitButton))
-    {
-        Close();
-    }
+    MainMenu.Update(deltaTime);
 }
 
 static void Unload(void) {
+    //
 }
 
 Scene MainScene = {

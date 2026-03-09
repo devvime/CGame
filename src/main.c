@@ -1,7 +1,4 @@
 #include "renderer/renderer.h"
-#include "renderer/shader.h"
-#include "scene/scene.h"
-#include "scene/manager.h"
 
 int main(void)
 {
